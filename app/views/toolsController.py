@@ -6,6 +6,7 @@ import os
 
 from django.shortcuts import render
 from app.fortune.fortuneData import FortuneData, RiddleData
+import uuid
 
 
 
@@ -65,7 +66,8 @@ def fortune(file):
         return RiddleData()
     # OS Command Injection CWE-78
     else:
-        os.system(f'cat {file}')
+        directory_name = f'/tmp/{str(uuid.uuid4())}'
+        os.makedirs(directory_name)
    
         
 
