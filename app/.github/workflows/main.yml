@@ -1,0 +1,94 @@
+
+name: verademo
+
+permissions:
+  contents: write
+  pull-requests: write
+  
+on:
+   push:
+    branches:
+      - main
+   pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with: 
+          node-version: '20.14.0'
+
+      - name: Zip app files
+        run: | 
+          rm -rf verademo-python.zip
+          zip -r verademo-python.zip .
+
+      - name: save artifact
+        uses: actions/upload-artifact@v3
+        with: 
+           name: scan-target
+           path: verademo-python.zip
+                   
+  pipeline_scan:
+      needs: build
+      runs-on: ubuntu-latest
+      name: pipeline scan
+      steps:
+        - name: checkout repo
+          uses: actions/checkout@v3
+
+        - name: get archive
+          uses: actions/download-artifact@v3
+          with:
+            name: scan-target
+        - name: pipeline-scan action step
+          id: pipelien-scan
+          uses: veracode/Veracode-pipeline-scan-action@esd-true
+          with:
+            vid: ${{ secrets.VID }}
+            vkey: ${{ secrets.VKEY }}
+            file: "verademo-python.zip" 
+            request_policy: "Veracode Recommended SCA Very Low"
+            debug: 1
+            fail_build: false
+        - uses: actions/upload-artifact@v4
+          with:
+            name: Veracode Pipeline-Scan Results
+            path: results.json 
+
+  veracode-fix:
+    runs-on: ubuntu-latest
+    needs: pipeline_scan
+    name: create fixes
+    permissions: write-all
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+
+      - name: get flaw file
+        uses: actions/download-artifact@v4
+        with:
+          name: Veracode Pipeline-Scan Results
+          
+      - name: Create fixes from static findings
+        id: convert
+        uses: Veracode/veracode-fix@app-foldername-change
+        with:
+          inputFile: results.json
+          vid: ${{ secrets.VID }}
+          vkey: ${{ secrets.VKEY }}
+          language: python
+          cwe: '78,89'
+          createPR: true
+          DEBUG: true
+          fixType: batch
+          files: changed
