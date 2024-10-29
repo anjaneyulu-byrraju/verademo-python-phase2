@@ -91,3 +91,4 @@ jobs:
           language: python
           fixType: single 
           files: all
+          cwe: '80,331,295,78,89,757'
