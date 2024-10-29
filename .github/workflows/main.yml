@@ -92,3 +92,4 @@ jobs:
           fixType: batch 
           files: all
           cwe: '73,327,601'
+          createPR: true
