@@ -89,6 +89,6 @@ jobs:
           source_base_path_1: "app/:app/"
           prComment: true
           language: python
-          fixType: single 
+          fixType: batch 
           files: all
-          cwe: '80,331,295,78,89,757'
+          cwe: '73,327,601'
