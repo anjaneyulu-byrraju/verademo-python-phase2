@@ -86,6 +86,7 @@ jobs:
           inputFile: results.json
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
+          prComment: true
           language: python
-          fixType: single 
-          files: changed
+          fixType: batch 
+          files: all
