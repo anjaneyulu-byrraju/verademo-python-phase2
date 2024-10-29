@@ -81,7 +81,7 @@ jobs:
           
       - name: Create fixes from static findings
         id: convert
-        uses: veracode/veracode-fix@v1.0.0
+        uses: Veracode/veracode-fix@app-foldername-change
         with:
           inputFile: results.json
           vid: ${{ secrets.VID }}
@@ -90,4 +90,4 @@ jobs:
           prComment: true
           language: python
           fixType: batch 
-          files: all
+          files: changed
