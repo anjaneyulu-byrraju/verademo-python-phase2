@@ -89,4 +89,4 @@ jobs:
           prComment: true
           language: python
           fixType: batch 
-          files: all
+          files: changed
