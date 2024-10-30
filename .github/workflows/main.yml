@@ -91,3 +91,4 @@ jobs:
           DEBUG: true
           fixType: batch
           files: all
+          cwe: '73,327,601'
