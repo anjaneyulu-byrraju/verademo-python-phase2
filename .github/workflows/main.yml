@@ -89,7 +89,5 @@ jobs:
           source_base_path_1: "app/:app/"
           prComment: true
           language: python
-          fixType: batch 
-          files: all
-          cwe: '73,327,601'
-          createPR: true
+          fixType: single 
+          files: changed
