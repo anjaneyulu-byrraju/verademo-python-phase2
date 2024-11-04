@@ -88,6 +88,7 @@ jobs:
           vkey: ${{ secrets.VKEY }}
           language: python
           createPR: true
+          cwe: '331'
           DEBUG: true
-          fixType: single
-          files: changed
+          fixType: batch
+          files: all
