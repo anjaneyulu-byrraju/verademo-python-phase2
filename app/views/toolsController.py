@@ -68,8 +68,3 @@ def fortune(file):
         os.system(f'cat {file}')
    
         
-
-
-
-
-   
