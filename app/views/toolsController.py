@@ -66,5 +66,3 @@ def fortune(file):
     # OS Command Injection CWE-78
     else:
         os.system(f'cat {file}')
-   
-        

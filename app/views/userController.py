@@ -810,4 +810,3 @@ def getProfileImageNameFromUsername(username):
 # checks if a request was made using a JQuery ajax request
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
-
