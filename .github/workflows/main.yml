@@ -88,7 +88,7 @@ jobs:
           vkey: ${{ secrets.VKEY }}
           language: python
           createPR: true
-          cwe: '331'
+          cwe: '331,80,295,78,89,757'
           DEBUG: true
           fixType: batch
           files: changed
