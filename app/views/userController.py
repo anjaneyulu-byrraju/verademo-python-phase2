@@ -22,6 +22,7 @@ import mimetypes
 
 from app.models import User, Blabber
 from app.forms import RegisterForm
+from html import escape
 
 
 # Get logger
@@ -194,9 +195,9 @@ def showPasswordHint(request):
                 formatString = "Username '" + username + "' has password: {}"
                 hint = formatString.format(password[:2] + ("*" * (len(password) - 2)))
                 logger.info(hint)
-                return HttpResponse(hint)
+                return HttpResponse(escape(hint))
             else:
-                return HttpResponse("No password found for " + username)
+                return HttpResponse(escape("No password found for " + username))
     except DatabaseError as db_err:
             logger.error("Database error", db_err)
             return HttpResponse("ERROR!") 
@@ -557,7 +558,7 @@ def processProfile(request):
     # Initial response only get returns if everything else succeeds.
     # This must be here in order to use set_cookie later in the program
     msg = f"<script>alert('Successfully changed values!\\nusername: {username.lower()}\\nReal Name: {realName}\\nBlab Name: {blabName}');</script>"
-    response = JsonResponse({'values':{"username": username.lower(), "realName": realName, "blabName": blabName}, 'message':msg},status=200)
+    response = JsonResponse({'values':escape({"username": username.lower(), "realName": realName, "blabName": blabName}),'message':msg}, status=200)
     
     logger.info("entering processProfile")
     sessionUsername = request.session.get('username')
