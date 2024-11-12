@@ -48,7 +48,7 @@ def feed(request):
 
                 logger.info("Executing query to get all 'Blabs for me'")
                 blabsForMe = sqlBlabsForMe.format(10, 0)
-                cursor.execute(blabsForMe % (username,))
+                cursor.execute("SELECT * FROM blabsForMe WHERE username = %s AND UA = %s", (username, UA))
                 blabsForMeResults = cursor.fetchall()
 
                 feedBlabs = []
@@ -72,7 +72,7 @@ def feed(request):
                 # Find the Blabs by this user
 
                 logger.info("Executing query to get all of user's Blabs")
-                cursor.execute(sqlBlabsByMe % (username,))
+                cursor.execute("SELECT * FROM blabsByUser %s;", (username, ))
                 blabsByMeResults = cursor.fetchall()
 
                 myBlabs = []
@@ -117,7 +117,7 @@ def feed(request):
                 addBlabSql = "INSERT INTO blabs (blabber, content, timestamp) values ('%s', '%s', datetime('now'));"
 
                 logger.info("Executing query to add new blab")
-                cursor.execute(addBlabSql % (username, blab))
+                cursor.execute("INSERT INTO blabs (blabber, content, timestamp) values (%s, %s, datetime('now'))", [username, blab])
 
                 if not cursor.rowcount:
                     request.error = "Failed to add blab"
@@ -170,7 +170,7 @@ def morefeed(request):
     except Exception as e:
         logger.error("Unexpected error", e)
 
-    return HttpResponse(ret)
+    return escape(HttpResponse(ret))
     
 # Brings up the page to view a blab, or to write a blab
 def blab(request):
