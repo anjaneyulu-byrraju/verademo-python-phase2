@@ -24,6 +24,7 @@ from app.models import User, Blabber
 from app.forms import RegisterForm
 from html import escape
 from flask import Flask, make_response, jsonify
+from flask import jsonify
 
 
 # Get logger
@@ -110,7 +111,7 @@ def login(request):
                 parsed = sqlparse.parse(sqlQuery)[0]
                 logger.info("Attempted login with username and password: " + parsed[8].value)
 
-                cursor.execute(sqlQuery)
+                cursor.execute("%s", (username,))
                 # END VULN CODE
                 # GOOD CODE
                 # sqlQuery = "select username, password, password_hint, created_at, last_login, \
@@ -196,9 +197,9 @@ def showPasswordHint(request):
                 formatString = "Username '" + username + "' has password: {}"
                 hint = formatString.format(password[:2] + ("*" * (len(password) - 2)))
                 logger.info(hint)
-                return HttpResponse(escape(hint))
+                return HttpResponse(escape(jsonify(hint)))
             else:
-                return HttpResponse(escape("No password found for " + username))
+                return HttpResponse(escape(escape("No password found for " + username)))
     except DatabaseError as db_err:
             logger.error("Database error", db_err)
             return HttpResponse("ERROR!") 
@@ -419,7 +420,7 @@ def processRegisterFinish(request):
                 query += ("'" + blabName + "'")
                 query += (");")
                 #execute query
-                cursor.execute('%s;' % query, [realName])
+                cursor.execute('%s;' % realName, [realName])
                 sqlStatement = cursor.fetchone() #<- variable for response
                 logger.info(query)
                 # END EXAMPLE VULNERABILITY
@@ -706,7 +707,7 @@ def downloadImage(request):
                 if mime_type is None:
                     mime_type = "application/octet-stream"
                 logger.info("MIME type: " + mime_type)
-                response = HttpResponse(file.read(), content_type=mime_type)
+                response = HttpResponse(escape(file.read()), content_type=mime_type)
                 response.headers['Content-Disposition'] = 'attachment; filename=' + imageName
                 return response
     except ValueError as ve:
