@@ -87,6 +87,7 @@ jobs:
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
           language: python
+          cwe: '73,327,601'
           prComment: true
           DEBUG: true
           fixType: single
