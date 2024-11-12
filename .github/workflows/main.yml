@@ -92,3 +92,4 @@ jobs:
           DEBUG: true
           fixType: batch
           files: all
+          createPR: true
