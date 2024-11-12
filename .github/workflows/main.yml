@@ -90,4 +90,4 @@ jobs:
           createPR: true
           DEBUG: true
           fixType: batch
-          files: changed
+          files: all
