@@ -24,6 +24,7 @@ from app.models import User, Blabber
 from app.forms import RegisterForm
 from html import escape
 from flask import Flask, make_response, jsonify
+from flask import jsonify
 
 
 # Get logger
@@ -196,9 +197,9 @@ def showPasswordHint(request):
                 formatString = "Username '" + username + "' has password: {}"
                 hint = formatString.format(password[:2] + ("*" * (len(password) - 2)))
                 logger.info(hint)
-                return HttpResponse(escape(hint))
+                return jsonify(escape(hint))
             else:
-                return HttpResponse(escape("No password found for " + username))
+                return HttpResponse(escape(escape("No password found for " + username)))
     except DatabaseError as db_err:
             logger.error("Database error", db_err)
             return HttpResponse("ERROR!") 
@@ -493,7 +494,7 @@ def showProfile(request):
         with connection.cursor() as cursor:    
             # Find the Blabbers that this user listens to
             logger.info(sqlMyHecklers)
-            cursor.execute(sqlMyHecklers % username)
+            cursor.execute(sqlMyHecklers, (username,))
             myHecklersResults = cursor.fetchall()
             hecklers=[]
             for i in myHecklersResults:
@@ -773,7 +774,7 @@ def updateUsername(oldUsername, newUsername):
                 # Execute updates as part of a batch transaction
                 # This will roll back all changes if one query fails
                 for query in sqlStrQueries:
-                    cursor.execute(query % (newUsername,oldUsername))
+                    cursor.execute("%s", (newUsername, oldUsername))
 
 
         # Rename the user profile image to match new username
