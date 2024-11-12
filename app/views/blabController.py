@@ -159,7 +159,7 @@ def morefeed(request):
 
             logger.info("Executing query to see more Blabs")
             blabsForMe = sqlBlabsForMe.format(len, cnt)
-            cursor.execute(blabsForMe % (username,))
+            cursor.execute("%s", (username, ))
             results = cursor.fetchall()
             ret = ""
             for blab in results:
@@ -198,7 +198,7 @@ def blab(request):
             with connection.cursor() as cursor:
 
                 logger.info("Executing query to see Blab details")
-                cursor.execute(blabDetailsSql % (blabid,))
+                cursor.execute("%s", (blabid, ))
                 blabDetailsResults = cursor.fetchone()
 
                 if (blabDetailsResults):
@@ -297,7 +297,7 @@ def blabbers(request):
 
                 logger.info(blabbersSql)
                 logger.info("Executing query to see Blab details")
-                cursor.execute(blabbersSql % (username, username))
+                cursor.execute("SELECT * FROM blabbers WHERE username = %s;", (username,))
                 blabbersResults = cursor.fetchall()
 
                 blabbers = []
