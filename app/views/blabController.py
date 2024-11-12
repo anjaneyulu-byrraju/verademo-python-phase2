@@ -208,7 +208,7 @@ def blab(request):
 
                     # Get comments
                     logger.info("Executing query to get all comments")
-                    cursor.execute("%s" % (blabCommentsSql, (blabid, )))
+                    cursor.execute(blabCommentsSql, (blabid, ))
                     blabCommentsResults = cursor.fetchall()
 
                     comments = []
