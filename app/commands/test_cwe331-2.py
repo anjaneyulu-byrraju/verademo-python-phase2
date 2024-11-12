@@ -8,3 +8,4 @@ def generate_iv():
 # Example usage
 iv = generate_iv()
 print(f"Generated IV: {iv}")
+
