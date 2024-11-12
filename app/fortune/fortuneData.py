@@ -1,4 +1,5 @@
 import random
+import secrets
 
 
 def FortuneData():
@@ -102,7 +103,7 @@ def FortuneData():
             "Happy life is just in front of you." 
         ]
 
-        return random.choice(fortunes)
+        return secrets.choice(fortunes)
 
 
 def RiddleData():
