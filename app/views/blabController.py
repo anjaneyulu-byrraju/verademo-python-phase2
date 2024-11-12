@@ -170,7 +170,7 @@ def morefeed(request):
     except Exception as e:
         logger.error("Unexpected error", e)
 
-    return HttpResponse(ret)
+    return escape(HttpResponse(ret))
     
 # Brings up the page to view a blab, or to write a blab
 def blab(request):
