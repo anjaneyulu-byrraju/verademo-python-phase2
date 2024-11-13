@@ -89,5 +89,5 @@ jobs:
           language: python
           prComment: true
           DEBUG: true
-          fixType: single
+          fixType: batch
           files: all
