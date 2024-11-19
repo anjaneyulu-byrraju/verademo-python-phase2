@@ -109,6 +109,7 @@ def processReset(request):
                 for blabber in users[2:]:
                     for listener in users[2:]:
                         rand = random.SystemRandom()
+                        rand = random.SystemRandom()
                         if rand.choice([False, True]) and (blabber!= listener):
                             
 
@@ -146,6 +147,7 @@ def processReset(request):
                 for i in range(len(blabsContent)):
                     # Add a random number of comment
                     rand = random.SystemRandom()
+                    rand = random.SystemRandom()
                     count = rand.randint(0, 5) #between 0 and 6
 
                     for j in range(count) :
@@ -159,6 +161,7 @@ def processReset(request):
 
                         # get the number or seconds until some time in the last 30 days.
                         rand = random.SystemRandom()
+                        rand = rand.SystemRandom()
                         vary = rand.randint(0, (30 * 24 * 3600)+1)
 
                         logger.info("Adding a comment from " + username + " on blab ID " + str(i))
