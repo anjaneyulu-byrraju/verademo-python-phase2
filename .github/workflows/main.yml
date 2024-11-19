@@ -81,13 +81,13 @@ jobs:
           
       - name: Create fixes from static findings
         id: convert
-        uses: Veracode/veracode-fix@app-foldername-change
+        uses: Veracode/veracode-fix@main
         with:
           inputFile: results.json
           vid: ${{ secrets.VID }}
           vkey: ${{ secrets.VKEY }}
           language: python
-          cwe: '331,80'
+          prComment: true
           createPR: true
           DEBUG: true
           fixType: batch
