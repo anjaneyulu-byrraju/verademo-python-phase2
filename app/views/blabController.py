@@ -117,7 +117,7 @@ def feed(request):
                 addBlabSql = "INSERT INTO blabs (blabber, content, timestamp) values ('%s', '%s', datetime('now'));"
 
                 logger.info("Executing query to add new blab")
-                cursor.execute(addBlabSql % (username, blab))
+                cursor.execute("INSERT INTO blabs (blabber, content, timestamp) values (%s, %s, datetime('now'));", (username, blab))
 
                 if not cursor.rowcount:
                     request.error = "Failed to add blab"
@@ -198,7 +198,7 @@ def blab(request):
             with connection.cursor() as cursor:
 
                 logger.info("Executing query to see Blab details")
-                cursor.execute(blabDetailsSql % (blabid,))
+                cursor.execute(blabDetailsSql, (blabid, ))
                 blabDetailsResults = cursor.fetchone()
 
                 if (blabDetailsResults):
@@ -208,7 +208,7 @@ def blab(request):
 
                     # Get comments
                     logger.info("Executing query to get all comments")
-                    cursor.execute(blabCommentsSql % (blabid,))
+                    cursor.execute("%s %s" % (blabCommentsSql, (blabid, )))
                     blabCommentsResults = cursor.fetchall()
 
                     comments = []
@@ -297,7 +297,7 @@ def blabbers(request):
 
                 logger.info(blabbersSql)
                 logger.info("Executing query to see Blab details")
-                cursor.execute(blabbersSql, (username, username))
+                cursor.execute(blabbersSql, [username, username])
                 blabbersResults = cursor.fetchall()
 
                 blabbers = []
