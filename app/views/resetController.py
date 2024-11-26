@@ -109,6 +109,7 @@ def processReset(request):
                 for blabber in users[2:]:
                     for listener in users[2:]:
                         rand = random.SystemRandom()
+                        rand = random.SystemRandom()
                         if rand.choice([False, True]) and (blabber!= listener):
                             
 
@@ -127,7 +128,7 @@ def processReset(request):
                 for blabContent in blabsContent:
                     # Get the array offset for a random user
                     rand = random.SystemRandom()
-                    randomUserOffset = rand.randint(2, len(users) - 1)
+                    randomUserOffset = random.SystemRandom().randint(2, len(users) - 1)
 
                     # get the number or seconds until some time in the last 30 days.
                     #vary = rand.randint(0,(30 * 24 * 3600)+1)
@@ -155,10 +156,12 @@ def processReset(request):
 
                         # Pick a random comment to add
                         rand = random.SystemRandom()
+                        rand = random.SystemRandom()
                         commentNum = rand.randint(0, len(commentsContent)-1)
                         comment = commentsContent[commentNum]
 
                         # get the number or seconds until some time in the last 30 days.
+                        rand = random.SystemRandom()
                         rand = random.SystemRandom()
                         vary = rand.randint(0, (30 * 24 * 3600)+1)
 
