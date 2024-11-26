@@ -221,7 +221,7 @@ $('#profileImage').attr('src', DOMPurify.sanitize(image_path + val + '.png'));
 							});
 						}
 						if ('message' in data) {
-							DOMPurify.sanitize($('body').append(data.message));
+							DOMPurify.sanitize($('body').append(DOMPurify.sanitize(data.message)));
 						}
 					}
 				},
