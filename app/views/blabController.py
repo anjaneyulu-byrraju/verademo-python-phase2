@@ -198,7 +198,7 @@ def blab(request):
             with connection.cursor() as cursor:
 
                 logger.info("Executing query to see Blab details")
-                cursor.execute("%s %s" % (blabDetailsSql, (blabid, )))
+                cursor.execute("%s %s" % (blabDetailsSql, (blabDetailsSql, blabid, )))
                 blabDetailsResults = cursor.fetchone()
 
                 if (blabDetailsResults):
