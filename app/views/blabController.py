@@ -254,7 +254,7 @@ def blab(request):
             with connection.cursor() as cursor:
 
                 logger.info("Executing addComment")
-                cursor.execute(addCommentSql % (blabid, username, comment, moment.now().format("YYYY-MM-DD hh:mm:ss")))
+                cursor.execute(addCommentSql % ("?", username, comment, moment.now().format("YYYY-MM-DD hh:mm:ss")), (blabid,))
                 
                 if not cursor.rowcount:
                     request.error = "Failed to add comment"
