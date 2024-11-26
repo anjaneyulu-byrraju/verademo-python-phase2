@@ -24,6 +24,7 @@ from app.models import User, Blabber
 from app.forms import RegisterForm
 from html import escape
 from flask import Flask, make_response, jsonify
+from flask import jsonify
 
 
 # Get logger
@@ -196,9 +197,9 @@ def showPasswordHint(request):
                 formatString = "Username '" + username + "' has password: {}"
                 hint = formatString.format(password[:2] + ("*" * (len(password) - 2)))
                 logger.info(hint)
-                return HttpResponse(escape(hint))
+                return HttpResponse(jsonify(escape(hint)))
             else:
-                return HttpResponse(escape("No password found for " + username))
+                return jsonify(escape("No password found for " + username))
     except DatabaseError as db_err:
             logger.error("Database error", db_err)
             return HttpResponse("ERROR!") 
